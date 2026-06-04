@@ -19,7 +19,7 @@ app = FastAPI(title="Backend Híbrido CONPES 38 - Comunidad Raizal")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["https://poblacionraizal.onrender.com"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
