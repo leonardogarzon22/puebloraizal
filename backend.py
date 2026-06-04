@@ -11,13 +11,12 @@ load_dotenv()
 # ==========================================
 # CONFIGURACIÓN DE APIS Y SERVIDOR
 # ==========================================
-# RECOMENDACIÓN: Asegúrate de que esta clave empiece por 'AIzaSy'. 
-# Si tu clave actual no tiene ese formato, cámbiala por una de Google AI Studio.
+
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 app = FastAPI(title="Backend Híbrido CONPES 38 - Comunidad Raizal")
 
-# Habilitar CORS para que tu archivo index.html pueda hacer peticiones sin restricciones
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -109,7 +108,7 @@ async def chat_hibrido(payload: ConsultaUsuario):
         return {"respuesta": response.text}
         
     except Exception as e:
-        # 🔔 ¡ESTO IMPRIMIRÁ EL ERROR REAL DIRECTO EN TU TERMINAL!
+
         print("\n" + "!"*60)
         print("❌ DETALLE CRÍTICO DEL ERROR EN EL BACKEND:")
         print(str(e))
