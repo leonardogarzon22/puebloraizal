@@ -1,4 +1,5 @@
 import json
+import traceback
 import os
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
@@ -110,14 +111,19 @@ async def chat_hibrido(payload: ConsultaUsuario):
             f"{prompt_sistema}\n\nPregunta del usuario: {pregunta}"
         )
         return {"respuesta": response.text}
-        
+    
     except Exception as e:
+       print("\n" + "="*80)
+       print("ERROR COMPLETO")
+       print(traceback.format_exc())
+       print("="*80 + "\n")
 
-        print("\n" + "!"*60)
-        print("❌ DETALLE CRÍTICO DEL ERROR EN EL BACKEND:")
-        print(str(e))
-        print("!"*60 + "\n")
-        raise HTTPException(status_code=500, detail=f"Error en el modelo Gemini: {str(e)}")
+       raise HTTPException(
+           status_code=500,
+           detail=str(e)
+       )
+        
+   
 
 if __name__ == "__main__":
     import uvicorn
