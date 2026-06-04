@@ -19,11 +19,15 @@ app = FastAPI(title="Backend Híbrido CONPES 38 - Comunidad Raizal")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://poblacionraizal.onrender.com"],
-    allow_credentials=True,
+    allow_origins=["*"],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.get("/")
+def read_root():
+    return {"status": "online", "message": "Backend de RaizalGPT activo"}
 
 # Cargar el archivo JSON
 ARCHIVO_JSON = "contexto_conpes_38.json"
