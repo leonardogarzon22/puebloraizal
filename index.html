@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Política Pública Raizal - Bogotá (CONPES 38)</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <style>
+        /* Variables de color inspiradas en la cultura Raizal y el Caribe */
+        :root {
+            --primary-color: #0077b6;
+            --secondary-color: #00b4d8;
+            --accent-color: #ffb703;
+            --background-color: #f8f9fa;
+            --text-color: #333;
+            --bot-bg: #e0fbfc;
+            --user-bg: #0077b6;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* Cabecera / Hero Section */
+        header {
+            background: linear-gradient(135deg, rgba(0, 119, 182, 0.9), rgba(0, 180, 216, 0.9)), url('imagen1.jpg') center/cover;
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Sección de Conceptos */
+        .container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            margin-bottom: 40px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-bottom: 5px solid var(--accent-color);
+            cursor: pointer; /* Indicador de clic añadido */
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-content h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        /* =========================================================
+           NUEVOS ESTILOS: VENTANAS EMERGENTES (MODALES) PREMIUM
+           ========================================================= */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 650px;
+            padding: 40px;
+            position: relative;
+            transform: translateY(30px) scale(0.95);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            border-top: 5px solid var(--secondary-color);
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0) scale(1);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.3s ease;
+            line-height: 1;
+        }
+
+        .close-btn:hover {
+            color: var(--accent-color);
+        }
+
+        .modal-title {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            padding-right: 30px;
+        }
+
+        .modal-body {
+            color: var(--text-color);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        .modal-body p {
+            margin-bottom: 15px;
+        }
+
+        /* Chatbot Flotante (SIN MODIFICACIONES) */
+        #chatbot-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 380px; 
+            max-height: 550px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        #chatbot-header {
+            background: var(--primary-color);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        #chatbot-header h3 {
+            font-size: 1.1rem;
+        }
+
+        #chatbot-messages {
+            flex-grow: 1;
+            height: 350px;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background-color: #f4f7f6;
+        }
+
+        .message {
+            max-width: 85%;
+            padding: 12px 16px;
+            border-radius: 15px;
+            font-size: 0.95rem;
+            word-wrap: break-word;
+        }
+
+        .bot-message {
+            background: var(--bot-bg);
+            color: #1d3557;
+            align-self: flex-start;
+            border-bottom-left-radius: 0;
+        }
+
+        /* 2. ESTILOS INTERNOS DE FORMATO PARA LA RESPUESTA DE LA IA */
+        .bot-message p {
+            margin-bottom: 8px;
+        }
+        .bot-message p:last-child {
+            margin-bottom: 0;
+        }
+        .bot-message h1, .bot-message h2, .bot-message h3, .bot-message h4 {
+            font-size: 1.05rem;
+            margin-top: 12px;
+            margin-bottom: 6px;
+            color: var(--primary-color);
+        }
+        .bot-message ul, .bot-message ol {
+            padding-left: 20px;
+            margin-bottom: 8px;
+        }
+        .bot-message li {
+            margin-bottom: 4px;
+        }
+
+        .user-message {
+            background: var(--user-bg);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 0;
+        }
+
+        #chatbot-input {
+            display: flex;
+            padding: 10px;
+            background: white;
+            border-top: 1px solid #ddd;
+        }
+
+        #chatbot-input input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            outline: none;
+        }
+
+        #chatbot-input button {
+            background: var(--accent-color);
+            color: #333;
+            border: none;
+            padding: 10px 15px;
+            margin-left: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        #chatbot-input button:hover {
+            background: #ffc300;
+        }
+
+        .minimized {
+            height: 55px !important;
+        }
+        
+        .minimized #chatbot-messages, 
+        .minimized #chatbot-input {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Explorador de la Política Pública Raizal</h1>
+        <p>Conoce las acciones, derechos y oportunidades para la comunidad Raizal en Bogotá D.C. (Plan de Acción CONPES 38)</p>
+    </header>
+
+    <div class="container">
+        <h2 class="section-title">Ejes Estratégicos</h2>
+        
+        <div class="grid">
+            <div class="card" onclick="openModal('cultura')">
+                <img src="imagen2.jpeg" alt="Cultura e Identidad">
+                <div class="card-content">
+                    <h3>Cultura e Identidad</h3>
+                    <p>Fomento de prácticas artísticas, protección del patrimonio inmaterial, realización de la Semana Raizal y fortalecimiento de la Cátedra de Estudios Afrocolombianos en los colegios.</p>
+                </div>
+            </div>
+
+            <div class="card" onclick="openModal('economia')">
+                <img src="imagen3.png" alt="Desarrollo Económico">
+                <div class="card-content">
+                    <h3>Desarrollo Económico</h3>
+                    <p>Apoyo a emprendimientos Raizales, formación en habilidades financieras y digitales, intermediación laboral y fomento del agroturismo cultural.</p>
+                </div>
+            </div>
+
+            <div class="card" onclick="openModal('salud')">
+                <img src="imagen4.jpg" alt="Salud Integral">
+                <div class="card-content">
+                    <h3>Salud y Bienestar</h3>
+                    <p>Implementación de estrategias con enfoque diferencial étnico, atención psicosocial, seguridad alimentaria y mejora en la percepción de los servicios de salud.</p>
+                </div>
+            </div>
+
+            <div class="card" onclick="openModal('gobierno')">
+                <img src="imagen5.jpg" alt="Gobierno y Derechos">
+                <div class="card-content">
+                    <h3>Gobierno y Derechos</h3>
+                    <p>Prevención de la discriminación y el racismo, fortalecimiento organizativo, participación ciudadana y acciones afirmativas para mujeres cuidadoras.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="categoryModal" onclick="closeModal(event)">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal(event, true)">&times;</span>
+            <h2 class="modal-title" id="modalTitle">Título</h2>
+            <div class="modal-body" id="modalBody">
+                </div>
+        </div>
+    </div>
+
+    <div id="chatbot-container">
+        <div id="chatbot-header" onclick="toggleChat()">
+            <h3>🤖 Asistente Virtual Raizal</h3>
+            <span id="toggle-icon">▼</span>
+        </div>
+        <div id="chatbot-messages">
+            <div class="message bot-message">
+                ¡Hola! Soy tu asistente impulsado por IA. Estoy aquí para responder cualquier pregunta sobre la Política Pública Raizal de Bogotá. ¿En qué te puedo ayudar hoy?
+            </div>
+        </div>
+        <div id="chatbot-input">
+            <input type="text" id="user-input" placeholder="Escribe tu pregunta aquí..." onkeypress="handleKeyPress(event)">
+            <button onclick="sendMessage()">➤</button>
+        </div>
+    </div>
+
+    <script>
+        /* =========================================================
+           NUEVA LÓGICA: VENTANAS EMERGENTES (MODALES)
+           ========================================================= */
+        const modalContentData = {
+            'cultura': {
+                title: 'Cultura e Identidad Raizal',
+                body: '<p>Este eje estratégico se enfoca en salvaguardar, promover y visibilizar el patrimonio cultural material e inmaterial de la comunidad Raizal en el contexto urbano de Bogotá. Entre las acciones primordiales se encuentra la <strong>protección y revitalización de la lengua Creole</strong>, apoyando programas de bilingüismo y traducción.</p><p>Adicionalmente, se consolida la <strong>Semana Raizal</strong> como un espacio de alto impacto cultural y se fortalece la enseñanza de la Cátedra de Estudios Afrocolombianos en las instituciones distritales, asegurando la transmisión intergeneracional de saberes, música tradicional, gastronomía y prácticas artísticas propias del Archipiélago.</p>'
+            },
+            'economia': {
+                title: 'Desarrollo Económico Sostenible',
+                body: '<p>Diseñado para cerrar brechas de desigualdad, este eje busca generar oportunidades de ingresos sostenibles para la población Raizal. Se prioriza el <strong>apoyo técnico y financiero a los emprendimientos familiares y productivos</strong>, especialmente aquellos enfocados en la gastronomía tradicional, la industria textil y la artesanía.</p><p>Contempla planes de alfabetización digital, formación en habilidades financieras e intermediación con el sector empresarial de la ciudad, facilitando el acceso a empleo formal y promoviendo modelos de economía solidaria y agroturismo cultural con estándares profesionales.</p>'
+            },
+            'salud': {
+                title: 'Salud Integral y Bienestar',
+                body: '<p>La política pública reconoce que el concepto de bienestar trasciende lo biológico, incorporando dimensiones espirituales y culturales. Este eje garantiza la implementación de <strong>estrategias de atención en salud con enfoque diferencial étnico</strong> en la red hospitalaria del Distrito.</p><p>Destaca la valoración y respeto por la medicina tradicional Raizal, la creación de rutas de atención psicosocial adaptadas al contexto migratorio, y programas robustos de seguridad alimentaria y nutricional orientados a proteger a la primera infancia y a los adultos mayores de la comunidad.</p>'
+            },
+            'gobierno': {
+                title: 'Gobierno, Derechos y Participación',
+                body: '<p>El eje rector de la garantía de derechos busca erradicar toda forma de discriminación y racismo estructural en la ciudad. Se orienta al <strong>fortalecimiento organizativo de las bases sociales Raizales</strong>, asegurando su representación real y efectiva en las mesas y consejos de política pública de Bogotá.</p><p>Incluye medidas afirmativas de protección jurídica, acompañamiento en defensa de los Derechos Humanos, y un enfoque particular en el empoderamiento y protección de las mujeres Raizales, reconociendo su rol fundamental como lideresas y cuidadoras del tejido social de la comunidad.</p>'
+            }
+        };
+
+        function openModal(category) {
+            const modal = document.getElementById('categoryModal');
+            const title = document.getElementById('modalTitle');
+            const body = document.getElementById('modalBody');
+
+            if(modalContentData[category]) {
+                title.textContent = modalContentData[category].title;
+                body.innerHTML = modalContentData[category].body;
+                modal.classList.add('active');
+            }
+        }
+
+        function closeModal(event, forceClose = false) {
+            const modal = document.getElementById('categoryModal');
+            // Cierra si hace clic en el botón (forceClose) o fuera del contenido (en el overlay)
+            if (forceClose || event.target === modal) {
+                modal.classList.remove('active');
+            }
+        }
+
+        /* =========================================================
+           LÓGICA ORIGINAL DEL CHATBOT (SIN MODIFICACIONES)
+           ========================================================= */
+        function toggleChat() {
+            const chat = document.getElementById('chatbot-container');
+            const icon = document.getElementById('toggle-icon');
+            chat.classList.toggle('minimized');
+            icon.textContent = chat.classList.contains('minimized') ? '▲' : '▼';
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        async function sendMessage() {
+            const inputField = document.getElementById('user-input');
+            const message = inputField.value.trim();
+            if (message === '') return;
+
+            addMessageToChat('user', message);
+            inputField.value = '';
+
+            const typingId = addMessageToChat('bot', 'Pensando...');
+
+            try {
+                const response = await getGeminiResponse(message);
+                updateBotMessage(typingId, response);
+            } catch (error) {
+                updateBotMessage(typingId, "Lo siento, ha ocurrido un error al conectar con la Inteligencia Artificial.");
+            }
+        }
+
+        function addMessageToChat(sender, text) {
+            const messagesContainer = document.getElementById('chatbot-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', sender === 'user' ? 'user-message' : 'bot-message');
+            
+            const messageId = 'msg-' + Date.now();
+            messageDiv.id = messageId;
+            
+            if (sender === 'bot') {
+                messageDiv.innerHTML = marked.parse(text);
+            } else {
+                messageDiv.textContent = text;
+            }
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            
+            return messageId;
+        }
+
+        function updateBotMessage(id, newText) {
+            const messageElement = document.getElementById(id);
+            if (messageElement) {
+                messageElement.innerHTML = marked.parse(newText);
+            }
+        }
+
+        async function getGeminiResponse(userPrompt) {
+            const URL = 'http://localhost:8000/api/chat';
+
+            const response = await fetch(URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ pregunta: userPrompt })
+            });
+
+            if (!response.ok) {
+                throw new Error('Error en el servidor backend');
+            }
+
+            const data = await response.json();
+            return data.respuesta;
+        }
+    </script>
+</body>
+</html>
