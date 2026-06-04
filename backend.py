@@ -1,17 +1,19 @@
 import json
 import os
+from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import google.generativeai as genai
+
+load_dotenv()
 
 # ==========================================
 # CONFIGURACIÓN DE APIS Y SERVIDOR
 # ==========================================
 # RECOMENDACIÓN: Asegúrate de que esta clave empiece por 'AIzaSy'. 
 # Si tu clave actual no tiene ese formato, cámbiala por una de Google AI Studio.
-GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "AQ.Ab8RN6KCUwnuM1o9T0ZesmXJiAv_oy7mDOhi9TQpw-ILyFfRQA")
-genai.configure(api_key=GEMINI_API_KEY)
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 app = FastAPI(title="Backend Híbrido CONPES 38 - Comunidad Raizal")
 
