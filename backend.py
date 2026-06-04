@@ -147,7 +147,16 @@ def gemini_test():
         return {
             "ok": False,
             "error": str(e)
-        }       
+        }
+        
+@app.get("/health")
+def health():
+    return {
+        "api_key_exists": bool(GEMINI_API_KEY),
+        "api_key_prefix": GEMINI_API_KEY[:10] if GEMINI_API_KEY else None,
+        "api_key_length": len(GEMINI_API_KEY) if GEMINI_API_KEY else 0,
+        "json_exists": os.path.exists(ARCHIVO_JSON)
+    }               
         
    
 
