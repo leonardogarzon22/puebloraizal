@@ -14,6 +14,9 @@ load_dotenv()
 # ==========================================
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+genai.configure(
+    api_key=GEMINI_API_KEY
+)
 
 app = FastAPI(title="Backend Híbrido CONPES 38 - Comunidad Raizal")
 
@@ -122,6 +125,29 @@ async def chat_hibrido(payload: ConsultaUsuario):
            status_code=500,
            detail=str(e)
        )
+
+@app.get("/gemini-test")
+def gemini_test():
+
+    try:
+
+        model = genai.GenerativeModel("gemini-3.5-flash")
+
+        response = model.generate_content(
+            "Responde únicamente: OK"
+        )
+
+        return {
+            "ok": True,
+            "respuesta": response.text
+        }
+
+    except Exception as e:
+
+        return {
+            "ok": False,
+            "error": str(e)
+        }       
         
    
 
